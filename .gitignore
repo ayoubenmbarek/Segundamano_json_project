@@ -1,3 +1,4 @@
 newsegundamano/*.csv
 newsegundamano/*.log
 .scrapy
+newsegundamano/backup/*.csv
