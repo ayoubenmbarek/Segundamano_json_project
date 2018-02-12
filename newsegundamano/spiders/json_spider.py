@@ -5,7 +5,7 @@ from scrapy_splash import SplashRequest
 from ..items import NewSegundamanoItem 
 from scrapy.spiders import CrawlSpider
 class SegundamanoJsonSpider(scrapy.Spider):
-    name = 'jsonspider16-01'
+    name = 'jsonspider12-02'
     allowed_domains = ['webapi.segundamano.mx', 'segundamano.mx']
     handle_httpstatus_list = [301, 302, 502, 200]
     download_delay = 0
@@ -13,7 +13,7 @@ class SegundamanoJsonSpider(scrapy.Spider):
     start_urls = ['https://webapi.segundamano.mx/nga/api/v1/public/klfst?lang=es&category=1000&lim=36']
 
     #@property
-    def parse(self, response):
+    def parse(self, response):#120,840 anuncios en Venta y renta de inmuebles en México 12_02
         data = json.loads(response.body)
         for jsonresponse in data.get('list_ads',[]):
             myItem = NewSegundamanoItem()
@@ -77,10 +77,10 @@ class SegundamanoJsonSpider(scrapy.Spider):
                 myItem['AGENCE_NOM'] = jsonresponse.get('ad').get('user').get('account').get('name')
             except:
                 pass
-            try:
-                myItem['ADRESSE'] = myItem['QUARTIER']+' ' +myItem['PROVINCE']+' '+myItem['REGION']
-            except:
-                pass
+            #try:
+            #    myItem['ADRESSE'] = myItem['QUARTIER']+' ' +myItem['PROVINCE']+' '+myItem['REGION']
+            #except:
+              #  pass
             #myItem[''] =
            # myItem[''] =
            # myItem[''] =
@@ -116,7 +116,7 @@ class SegundamanoJsonSpider(scrapy.Spider):
             #request.meta["myItem"] = myItem
             #yield request
             
-
+    #By the way, regarding the  rule, it is better if the ads that say "busco" or "se busca" are not crawled, so that they are not taking into account since the beginning.  #and add the fields SOLD and STOCK_NEUF to the csv file. 
     def detail_page(self, response):
 	data = json.loads(response.body)
         myItem = response.meta['myItem']
